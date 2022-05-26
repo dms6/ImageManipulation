@@ -3,7 +3,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-  
+//Results vary based on size of image and size of terminal font. Font can be rescaled by pressing Cmd- on code then restarting bluej.
+//Do not use greater than 100x100
 public class ImageToAscii {
     public static void main(String args[]) throws IOException
     {
