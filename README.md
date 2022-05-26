@@ -8,13 +8,13 @@ Drag the image you want to manipulate and call it input.png
 
 ImageToAscii
 
-![Screen Shot 2022-05-26 at 3 41 43 PM](https://user-images.githubusercontent.com/67237392/170564856-7dbde7b2-f979-4fdf-8710-e150bf37046f.png)
+![Screen Shot 2022-05-26 at 3 47 13 PM](https://user-images.githubusercontent.com/67237392/170584406-dd249846-3d64-43ef-afb3-bd26f08f5081.png)
 
-
-RainbowImage
-
-![output](https://user-images.githubusercontent.com/67237392/170564988-bfe23f97-ec10-49ab-a209-ff72f80ace20.png)
 
 BlurImage (blur = 9)
 
 ![output](https://user-images.githubusercontent.com/67237392/170580497-09243c09-3d27-49af-8c84-195d186e1b1f.png)
+
+RainbowImage
+
+![output](https://user-images.githubusercontent.com/67237392/170564988-bfe23f97-ec10-49ab-a209-ff72f80ace20.png)
