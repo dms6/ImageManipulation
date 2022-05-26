@@ -15,3 +15,6 @@ RainbowImage
 
 ![output](https://user-images.githubusercontent.com/67237392/170564988-bfe23f97-ec10-49ab-a209-ff72f80ace20.png)
 
+BlurImage (blur = 9)
+
+![output](https://user-images.githubusercontent.com/67237392/170580497-09243c09-3d27-49af-8c84-195d186e1b1f.png)
