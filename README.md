@@ -26,3 +26,10 @@ RainbowImage
 ImageToAscii - Take a step away from the screen :)
 
 ![Screen Shot 2022-05-26 at 9 33 00 PM](https://user-images.githubusercontent.com/67237392/170611082-fb9e798b-3d13-470b-9ff5-c3d226692959.png)
+
+EdgeDetection
+![1-gaussian](https://user-images.githubusercontent.com/67237392/170807569-cdfa3c24-662a-448c-982a-82830df2461b.png)
+![2-gradient](https://user-images.githubusercontent.com/67237392/170807570-15da28cf-7312-4ff9-a596-0e2b79592a2d.png)
+![3-suppression](https://user-images.githubusercontent.com/67237392/170807571-393cf963-1731-46b6-a363-2db669fe7b04.png)
+![4-threshold](https://user-images.githubusercontent.com/67237392/170807572-6be2f2d9-74cb-4e4f-99b8-34b31d33a858.png)
+![5-hysterisis](https://user-images.githubusercontent.com/67237392/170807573-970c5857-c2a9-4b1d-a207-62e8a388b412.png)
