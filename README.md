@@ -32,4 +32,5 @@ EdgeDetection
 ![2-gradient](https://user-images.githubusercontent.com/67237392/170807570-15da28cf-7312-4ff9-a596-0e2b79592a2d.png)
 ![3-suppression](https://user-images.githubusercontent.com/67237392/170807571-393cf963-1731-46b6-a363-2db669fe7b04.png)
 ![4-threshold](https://user-images.githubusercontent.com/67237392/170807572-6be2f2d9-74cb-4e4f-99b8-34b31d33a858.png)
+some pictures work better than others... also play around with the params
 ![5-hysterisis](https://user-images.githubusercontent.com/67237392/170807573-970c5857-c2a9-4b1d-a207-62e8a388b412.png)
