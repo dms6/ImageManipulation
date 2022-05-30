@@ -2,6 +2,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import java.util.Scanner;
 
 /**
  * https://en.wikipedia.org/wiki/Canny_edge_detector 
@@ -27,6 +28,7 @@ public class EdgeDetect {
     int[][] dir;
     //stores weak and strong pixels
     int[][] val;
+    int[][] grad;
     
     // READ IMAGE
     public EdgeDetect(String str) throws IOException {
@@ -46,20 +48,27 @@ public class EdgeDetect {
     }
 
     public static void main(String[] args)  throws IOException{
+        Scanner input = new Scanner(System.in);
+        System.out.println("enter sigma, lower, upper. \n Try 1.2 0.1 0.2" );
+        double sigma = input.nextDouble();
+        double lower = input.nextDouble();
+        double upper = input.nextDouble();
         EdgeDetect ed = new EdgeDetect("images/input.png");
+        
+        
         ed.grayscale();
         //the higher the number, the more noise is reduced. 
-        ed.gaussian(1.3);
-        ed.write("images/1-gaussian.png");
+        ed.gaussian(sigma);
+        //ed.write("images/1-gaussian.png");
         ed.intensityGradient();
-        ed.write("images/2-gradient.png");
+        //ed.write("images/2-gradient.png");
         ed.suppression();
-        ed.write("images/3-suppression.png");
+        //ed.write("images/3-suppression.png");
         //Any pixel under lower% is turned black, any number less than upper% is considered weak. 
-        ed.doubleThreshold(0.1, 0.17);
-        ed.write("images/4-threshold.png");
+        ed.doubleThreshold(lower, upper);
+        //ed.write("images/4-threshold.png");
         ed.hysteresis();
-        ed.write("images/5-hysterisis.png");
+        ed.write("images/final.png");
         
     }
     
@@ -87,6 +96,7 @@ public class EdgeDetect {
     
     //5x5 blue, but the further away a pixel is the less weight it has on the original pixel
     public void gaussian(double sigma){
+        if(sigma==0)return;
         updateCopy();
         double weight[][] = new double[5][5];
         double sum=0;
@@ -131,48 +141,46 @@ public class EdgeDetect {
     
     //https://en.wikipedia.org/wiki/Sobel_operator
     public void intensityGradient(){
-        
-        int[][] x = {{1, 0, -1},
-                     {1, 0, -1},
-                     {1, 0, -1}};
-                      
-        int[][] y = {{1, 1, 1},
-                     {0, 0, 0},
-                     {-1,-1,-1}};
-                     
-        dir = new int[height][width];
         updateCopy();
+        int[][] x = {{1, 0, -1},{2, 0, -2},{1, 0, -1}};        
+        int[][] y = {{1, 2, 1},{0, 0, 0},{-1,-2,-1}};   
+        dir = new int[height][width];
+        grad = new int[height][width];
+        int maxGradient = -1;
         for(int i = 1;i<width-1;i++){
             for(int j = 1;j<height-1;j++){
                 int pixel = copy.getRGB(i,j);
-                int intensity = (pixel >> 16) & 0xff;
                 double Gx = 0;
                 double Gy = 0;
-                
-                for(int k = i-1;k<=i+1;k++){
-                    if(k<0||k>width-1)continue;
-                    for(int l = j-1;l<=j+1;l++){
-                        if(l<0||l>height-1)continue;
-                        pixel = copy.getRGB(k,l);
+                for(int k = 0;k<3;k++){
+                    for(int l = 0;l< 3;l++){
+                        pixel = copy.getRGB(i-1+k,j-1+l);
                         int cIntensity = (pixel >> 16) & 0xff;
-                        
-                        Gx+=x[k-i+1][l-j+1]*cIntensity;
-                        Gy+=y[k-i+1][l-j+1]*cIntensity;
-                        
-                        
-                        
+                        Gx+=x[l][k]*cIntensity;
+                        Gy+=y[l][k]*cIntensity;
                     }
                 }
-                
-                double G = Math.sqrt(Gx*Gx+Gy*Gy); 
-                pixel = ((int)G << 16) | ((int)G << 8) | (int)G;
-                image.setRGB(i, j, pixel);
-                //Set up dir array
+                int G = (int)Math.sqrt(Gx*Gx+Gy*Gy); 
+                grad[j][i] = G;
+                 if(G>maxGradient) {
+                    maxGradient = G;
+                }
+
                 double theta = Math.atan2(Gy,Gx);
                 if(theta<=22.5 ||theta>=157.5) dir[j][i] = 0;
                 else if(theta<=45||theta>=135) dir[j][i] = 45;
                 else if(theta<=67.5||theta>=112.5) dir[j][i] = 90;
                 else dir[j][i] = 135;
+            }
+        }
+        
+        double scale = 255.0/maxGradient;
+        for(int i = 1;i<width-1;i++){
+            for(int j = 1;j<height-1;j++){
+                grad[j][i]*=scale;
+                
+                int pixel = (grad[j][i] << 16) | (grad[j][i] << 8) | grad[j][i];
+                image.setRGB(i, j, pixel);
             }
         }
     }
